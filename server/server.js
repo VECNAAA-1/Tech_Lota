@@ -168,7 +168,6 @@ app.post('/api/auth/forgot-password', (req, res) => {
   res.json({ message: 'Password reset link sent to your registered email.' });
 });
 
-const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`TalentAI Auth Backend running on http://localhost:${PORT}`);
 });
