@@ -1,0 +1,20 @@
+[
+  {
+    "id": "admin-1",
+    "name": "Saurav Gautam",
+    "company": "TalentAI Labs",
+    "email": "recruiter@talentai.io",
+    "password": "$2a$10$X50aQ/Yfnur6Rl1ImmI/qOkRD/34IQboBGZoGqaLhiKJAHig6FsUS",
+    "role": "admin",
+    "createdAt": "2026-07-19T09:37:45.035Z"
+  },
+  {
+    "id": "u-1784454130620",
+    "name": "Saurav Guatm",
+    "company": "TEch_LOta",
+    "email": "kgfuyehbfk@example.com",
+    "password": "$2a$10$q84t9LJpb7WLHoFZ5GQECOodtgHU3c1Zkj7ziqarRvqwjFgdU9mbG",
+    "role": "recruiter",
+    "createdAt": "2026-07-19T09:42:10.620Z"
+  }
+]
