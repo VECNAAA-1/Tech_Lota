@@ -5,15 +5,39 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DB_FILE = path.join(__dirname, 'users.json');
-const JWT_SECRET = 'talentai-secret-key-12345';
+
+const PORT = process.env.PORT || 3001;
+const JWT_SECRET = process.env.JWT_SECRET || 'talentai-secret-key-12345';
+const DB_FILE = process.env.DB_FILE ? path.resolve(__dirname, process.env.DB_FILE) : path.join(__dirname, 'users.json');
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: CORS_ORIGIN === '*' ? '*' : CORS_ORIGIN.split(','),
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
+
+// Rate limiting for auth routes
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window`
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many authentication attempts, please try again after 15 minutes.' }
+});
+
+app.use('/api/auth/', authLimiter);
+
 
 // Helper function to read/write JSON database
 const readDB = () => {
