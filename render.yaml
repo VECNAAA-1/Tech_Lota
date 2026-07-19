@@ -1,0 +1,30 @@
+services:
+  # Backend API service
+  - type: web
+    name: tech-lota-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    rootDir: server
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://tech-lota-1.onrender.com
+      - key: DB_FILE
+        value: users.json
+
+  # Frontend static site
+  - type: static
+    name: tech-lota-frontend
+    runtime: web
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: tech-lota-backend
+          property: host
